@@ -55,7 +55,7 @@ from django_swagger_utils.drf_server.utils.decorator.getPrivateKeyFromClientKeyR
 
 SWAGGER_UTILS = {
     "DEFAULTS": {
-        "REQUEST_WRAPPING_REQUIRED": True,
+        "REQUEST_WRAPPING_REQUIRED": False,
         "REQUEST_ENCRYPTION_REQUIRED": False,
         "GET_CLIENT_KEY_DETAILS_FUNCTION": getPrivateKeyFromClientKeyRelatedDetails,
         "GET_DECRYPTED_DATA_FUNCTION": getDecryptedData,
@@ -69,6 +69,7 @@ SWAGGER_UTILS = {
     },
     "APPS": {
         "rest_app": {"dsu_version": "1.0"},
+        "test_app": {"dsu_version": "1.0"},
     },
     "HOST": os.environ.get('APIGATEWAY_ENDPOINT', '127.0.0.1:8000'),
 }

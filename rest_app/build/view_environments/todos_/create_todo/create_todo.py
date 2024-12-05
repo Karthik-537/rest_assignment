@@ -10,7 +10,7 @@ from rest_app.build.serializers.definitions.DefaultHttpExceptionFields.DefaultHt
 
 options = {
     'METHOD': 'POST',
-    'REQUEST_WRAPPING_REQUIRED': True,
+    'REQUEST_WRAPPING_REQUIRED': False,
     'REQUEST_ENCRYPTION_REQUIRED': False,
     'REQUEST_IS_PARTIAL': False,
     'PARSER_CLASSES': [

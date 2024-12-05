@@ -9,7 +9,7 @@ from rest_app.build.serializers.definitions.DefaultHttpExceptionFields.DefaultHt
 
 options = {
     'METHOD': 'DELETE',
-    'REQUEST_WRAPPING_REQUIRED': True,
+    'REQUEST_WRAPPING_REQUIRED': False,
     'REQUEST_ENCRYPTION_REQUIRED': False,
     'REQUEST_IS_PARTIAL': False,
     'PARSER_CLASSES': [
@@ -21,7 +21,7 @@ options = {
     'REQUEST_QUERY_PARAMS_SERIALIZER': None,
     'REQUEST_HEADERS_SERIALIZER': None,
     'REQUEST_PATH_PARAMS_SERIALIZER': DeleteTodoRequestPathParamSerializer,
-    'DEFAULT_REQUEST_PATH_PARAMS': {"id": 415},
+    'DEFAULT_REQUEST_PATH_PARAMS': {"id": 516},
     'REQUEST_SERIALIZER': None,
     'REQUEST_SERIALIZER_MANY_ITEMS': False,
     'RESPONSE': {

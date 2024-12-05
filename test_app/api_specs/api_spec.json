@@ -1,45 +1,127 @@
 {
-        "swagger": "2.0",
-        "host": "127.0.0.1:8000",
-        "basePath": "/api/test_app/",
-        "info": {
-            "version": "1.0.0",
-            "title": "Simple API",
-            "description": "A simple API to learn how to write OpenAPI Specification"
-        },
-        "schemes": [
-            "http"
-        ],
-        "consumes": [
-            "application/json"
-        ],
-        "produces": [
-            "application/json"
-        ],
-        "securityDefinitions": {
-            "oauth": {
-                "tokenUrl": "http://auth.ibtspl.com/oauth2/",
-                "flow": "password",
-                "scopes": {
-                    "read": "read users",
-                    "write": "create users",
-                    "update": "update users",
-                    "delete": "delete users"
+    "swagger": "2.0",
+    "host": "localhost:8000",
+    "basePath": "/api/",
+    "info": {
+        "version": "1.0.0",
+        "title": "Simple API",
+        "description": "A simple API to learn how to write OpenAPI Specification"
+    },
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "oauth": {
+            "tokenUrl": "http://auth.ibtspl.com/oauth2/",
+            "flow": "password",
+            "scopes": {
+                "read": "read users",
+                "write": "create users",
+                "update": "update users",
+                "delete": "delete users",
+                "superuser": "super user permission"
+            },
+            "type": "oauth2"
+        }
+    },
+    "definitions": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string"
                 },
-                "type": "oauth2"
+                "lastName": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "age": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "required": [
+                "firstName",
+                "lastName",
+                "username",
+                "age"
+            ]
+        },
+        "UserWithExtraFields": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/User"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "createdOn": {
+                            "type": "string",
+                            "format": "datetime"
+                        },
+                        "userId": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "createdOn",
+                        "userId"
+                    ]
+                }
+            ]
+        }
+    },
+    "parameters": {
+        "CreateNewPersonParameter": {
+            "name": "person",
+            "in": "body",
+            "description": "The person to create.",
+            "schema": {
+                "$ref": "#/definitions/User"
             }
-        },
-        "security": [],
-        "definitions": {
-
-        },
-        "parameters": {
-
-        },
-        "responses": {
-
-        },
-        "paths": {
+        }
+    },
+    "responses": {
+        "CreateNewPersonResponse": {
+            "description": "Success Response",
+            "schema": {
+                "$ref": "#/definitions/UserWithExtraFields"
+            }
+        }
+    },
+    "paths": {
+        "/person/create/": {
+            "post": {
+                "operationId": "create_person",
+                "summary": "Create New Person",
+                "description": "Creates a new person and return the user object. This api is not idempotent.",
+                "security": [
+                    {
+                        "oauth": [
+                            "superuser"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/CreateNewPersonParameter"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "$ref": "#/responses/CreateNewPersonResponse"
+                    }
+                }
+            }
         }
     }
-    
+}
